@@ -1,0 +1,92 @@
+<!-- Admin Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-lg-none" href="{{ url_for('admin_dashboard') }}">
+            <i class="fas fa-university mr-1"></i> CCS Admin
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item {% if request.path == url_for('admin_dashboard') %}active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
+                        <i class="fas fa-home mr-1"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#searchModal">
+                        <i class="fas fa-search mr-1"></i> Search
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == url_for('view_students') %}active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('view_students') }}">
+                        <i class="fas fa-user-graduate mr-1"></i> Student
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == url_for('sitin_page') %}active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('sitin_page') }}">
+                        <i class="fas fa-chair mr-1"></i> Sit-in
+                        {% if active_count is defined and active_count > 0 %}
+                            <span class="badge badge-pill badge-danger">{{ active_count }}</span>
+                        {% elif active_sitin_count is defined and active_sitin_count > 0 %}
+                            <span class="badge badge-pill badge-danger">{{ active_sitin_count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == url_for('current_sitins') %}active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('current_sitins') }}">
+                        <i class="fas fa-clipboard-list mr-1"></i> Records
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == url_for('sitin_report') %}active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('sitin_report') }}">
+                        <i class="fas fa-chart-bar mr-1"></i> Reports
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == url_for('feedback_report') %}active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('feedback_report') }}">
+                        <i class="fas fa-comment-alt mr-1"></i> Feedback
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == url_for('lab_usage_points') %}active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('lab_usage_points') }}">
+                        <i class="fas fa-award mr-1"></i> Points
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == url_for('leaderboard') %}active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('leaderboard') }}">
+                        <i class="fas fa-trophy mr-1"></i> Leaderboard
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == url_for('admin_reservation') %}active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('admin_reservation') }}">
+                        <i class="fas fa-calendar-alt mr-1"></i> Reservations
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == url_for('computer_control') %}active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('computer_control') }}">
+                        <i class="fas fa-desktop mr-1"></i> Computers
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#uploadLabScheduleModal">
+                        <i class="fas fa-calendar-plus mr-1"></i> Add Schedule
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#uploadResourceMaterialsModal">
+                        <i class="fas fa-file-upload mr-1"></i> Add Resources
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="{{ url_for('logout') }}">
+                        <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav> 

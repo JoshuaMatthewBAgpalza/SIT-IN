@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Login - CCS Sit-in System</title>
+    
+<style>
+  :root {
+    --primary-color: #B4121B;
+    --secondary-color: #8C0D15;
+    --accent-color: #D43A43;
+    --light-color: #f8f9fa;
+    --dark-color: #000000;
+    --success-color: #2bc4a9;
+    --warning-color: #f9c74f;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  body::before {
+    content: '';
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    top: -400px;
+    right: -400px;
+  }
+  
+  body::after {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    bottom: -300px;
+    left: -300px;
+  }
+  
+  .login-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 40px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    border-top: 4px solid var(--primary-color);
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .system-title {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    color: var(--dark-color);
+    font-weight: 600;
+  }
+  
+  .system-subtitle {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 30px;
+  }
+  
+  .form-header {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  
+  .input-with-icon {
+    position: relative;
+  }
+  
+  .input-with-icon i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+  }
+  
+  .form-control {
+    height: 50px;
+    padding: 0 20px 0 45px;
+    font-size: 15px;
+    border: 2px solid #e1e1e1;
+    border-radius: 10px;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+  
+  .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(180, 18, 27, 0.1);
+    outline: none;
+  }
+  
+  .forgot-password {
+    display: block;
+    text-align: right;
+    color: var(--primary-color);
+    font-size: 14px;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: color 0.3s ease;
+  }
+  
+  .forgot-password:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+  }
+  
+  .btn-login {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 0;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+  
+  .btn-login:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(180, 18, 27, 0.3);
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+  }
+  
+  .signup-link {
+    margin-top: 25px;
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  .signup-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  
+  .signup-link a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+  }
+  
+  .error-message {
+    color: #dc3545;
+    text-align: left;
+    font-size: 14px;
+    background: rgba(220, 53, 69, 0.1);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .error-message i {
+    margin-right: 10px;
+    font-size: 16px;
+  }
+</style>
+  </head>
+
+  <body>
+    <div class="login-container">
+      <div class="logo-container">
+        <i class="fas fa-laptop-code fa-3x text-primary mr-3"></i>
+      </div>
+      
+      <h4 class="system-title">CCS Laboratory Sit-in System</h4>
+      <p class="system-subtitle">College of Computer Studies</p>
+      
+      <h5 class="form-header">Welcome Back</h5>
+      
+      {% if error %}
+      <div class="error-message">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{{ error }}</span>
+      </div>
+      {% endif %}
+      
+      <form action="/" method="POST">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <div class="input-with-icon">
+            <i class="fas fa-user"></i>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required />
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-with-icon">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required />
+          </div>
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+        
+        <button type="submit" class="btn-login">
+          <i class="fas fa-sign-in-alt mr-2"></i> Login
+        </button>
+      </form>
+      
+      <div class="signup-link">
+        <p>Don't have an account? <a href="/register">Sign up here</a></p>
+      </div>
+    </div>
+  </body>
+</html>
+

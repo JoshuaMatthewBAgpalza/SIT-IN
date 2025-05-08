@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #8A0E15 0%, #B4121B 100%);
+        padding: 20px;
+      }
+
+      .wrapper {
+        max-width: 470px;
+        width: 100%;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .form header {
+        text-align: center;
+        font-size: 28px;
+        font-weight: 600;
+        color: #000000;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      form input,
+      form select {
+        height: 50px;
+        padding: 0 20px;
+        font-size: 15px;
+        border: 2px solid #e1e1e1;
+        border-radius: 10px;
+        background-color: #ffffff;
+        transition: all 0.3s ease;
+      }
+
+      form input:focus,
+      form select:focus {
+        border-color: #B4121B;
+        box-shadow: 0 0 10px rgba(180, 18, 27, 0.1);
+        outline: none;
+      }
+
+      form select {
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23B4121B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        padding-right: 45px;
+      }
+
+      form input[type="submit"] {
+        background: linear-gradient(135deg, #8A0E15 0%, #B4121B 100%);
+        color: white;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        padding: 12px 0;
+        margin-top: 10px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      form input[type="submit"]:hover {
+        background: linear-gradient(135deg, #6d0c11 0%, #8A0E15 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(180, 18, 27, 0.3);
+      }
+
+      form a {
+        color: #B4121B;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s ease;
+      }
+
+      form a:hover {
+        color: #8A0E15;
+        text-decoration: underline;
+      }
+
+      .error-message {
+        color: #dc3545;
+        text-align: center;
+        font-size: 14px;
+        background: rgba(220, 53, 69, 0.1);
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section class="wrapper">
+      <div class="form signup">
+        <header>Registration</header>
+        <form action="/register" method="POST">
+          <input type="text" name="idno" placeholder="IDNO" required />
+          <input type="text" name="lastname" placeholder="Lastname" required />
+          <input type="text" name="firstname" placeholder="Firstname" required />
+          <input type="text" name="middlename" placeholder="Middlename" required />
+          
+          <select name="course" required>
+            <option value="">Select Course</option>
+            <option value="BSIT">BSIT</option>
+            <option value="BSCS">BSCS</option>
+            <option value="BSCJ">BSCJ</option>
+            <option value="BSHM">BSHM</option>
+          </select>
+          
+          <select name="year_level" required>
+            <option value="">Select Year & Level</option>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+          </select>
+          
+          <input type="email" name="email" placeholder="Email address" required />
+          <input type="text" name="username" placeholder="Username" required />
+          <input type="password" name="password" placeholder="Password" required />
+          <input type="submit" value="Register" />
+        </form>
+      </div>
+    </section>
+
+    <script>
+      document.getElementById("registration-form").addEventListener("submit", function(event) {
+        event.preventDefault(); 
+        alert("Successfully Registered!");
+      });
+    </script>
+  </body>
+</html>

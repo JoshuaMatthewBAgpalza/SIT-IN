@@ -1,0 +1,72 @@
+/* Admin Navbar Styling */
+.navbar {
+    background-color: #fff !important;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+
+.navbar .nav-link {
+    color: #212529 !important;
+    font-weight: 500;
+    padding: 10px 16px !important;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    margin: 0 2px;
+}
+
+.navbar .nav-link:hover {
+    background-color: rgba(67, 97, 238, 0.1);
+    color: #4361ee !important;
+    transform: translateY(-2px);
+}
+
+.navbar .nav-item.active .nav-link {
+    background-color: #4361ee;
+    color: white !important;
+    box-shadow: 0 4px 8px rgba(67, 97, 238, 0.2);
+}
+
+.navbar .navbar-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.navbar-collapse {
+    max-height: 80vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.navbar-collapse::-webkit-scrollbar {
+    width: 6px;
+}
+
+.navbar-collapse::-webkit-scrollbar-thumb {
+    background-color: #4361ee;
+    border-radius: 10px;
+}
+
+.badge-pill.badge-danger {
+    position: relative;
+    top: -5px;
+    margin-left: 3px;
+    font-size: 0.7rem;
+    padding: 3px 6px;
+    box-shadow: 0 2px 5px rgba(239, 71, 111, 0.3);
+    background-color: #ef476f;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #4361ee !important;
+}
+
+.navbar .text-danger {
+    color: #ef476f !important;
+}
+
+.navbar .text-danger:hover {
+    background-color: rgba(239, 71, 111, 0.1);
+    color: #ef476f !important;
+} 

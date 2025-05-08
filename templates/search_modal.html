@@ -1,0 +1,160 @@
+<!-- Common Search Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #B4121B; color: white; padding: 20px; border-bottom: 2px solid #000;">
+                <h5 class="modal-title" id="searchModalLabel" style="font-size: 1.5rem; font-weight: 700;">
+                    <i class="fas fa-search mr-2"></i> Search Student
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white; opacity: 1;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding: 30px;">
+                <div class="form-group">
+                    <label for="searchInput" style="font-size: 1.2rem; font-weight: 600; color: #333; margin-bottom: 12px;">
+                        <i class="fas fa-id-card mr-2"></i> Student ID
+                    </label>
+                    <div class="input-group input-group-lg">
+                        <input type="text" class="form-control form-control-lg" id="searchInput" 
+                            placeholder="Enter student ID" style="font-size: 1.2rem; padding: 15px; height: auto; border: 2px solid #B4121B;">
+                        <div class="input-group-append">
+                            <span class="input-group-text" style="background-color: #f8f9fa; border: 2px solid #B4121B; border-left: none;">
+                                <i class="fas fa-id-badge" style="color: #B4121B;"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <small class="text-muted" style="font-size: 0.9rem; margin-top: 8px; display: block;">
+                        Enter the student's ID number to search
+                    </small>
+                </div>
+                
+                <div class="search-help mt-4 p-3" style="background-color: #f8f9fa; border-radius: 8px; border-left: 4px solid #B4121B;">
+                    <h6 style="font-weight: 600; color: #333; font-size: 1.1rem;">
+                        <i class="fas fa-info-circle mr-2"></i> Search Information
+                    </h6>
+                    <p class="mb-0" style="font-size: 1rem; color: #555;">
+                        The search will find the student by their ID and allow you to:
+                    </p>
+                    <ul class="mt-2" style="font-size: 1rem; color: #555;">
+                        <li>View student details and profile</li>
+                        <li>Create sit-in sessions for the student</li>
+                        <li>Check remaining sessions</li>
+                    </ul>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary btn-lg" id="searchStudentBtn" style="background-color: #B4121B; border-color: #B4121B; font-size: 1.2rem; font-weight: 600; padding: 12px 30px; min-width: 200px;">
+                        <i class="fas fa-search mr-2"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Common Search Modal JavaScript -->
+<script>
+$(document).ready(function() {
+    // Search student button click handler
+    $('#searchStudentBtn').click(function() {
+        const studentId = $('#searchInput').val().trim();
+        if (studentId === '') {
+            alert('Please enter a student ID');
+            return;
+        }
+        
+        // Get the current page URL path to determine behavior
+        const currentPath = window.location.pathname;
+        
+        // Default behavior is to redirect to student view page
+        if (currentPath.includes('/admin_dashboard')) {
+            // For admin dashboard - search then open sit-in form
+            $.ajax({
+                url: "/search_student",
+                type: "GET",
+                data: { idno: studentId },
+                success: function(response) {
+                    // Populate sit-in form with student details
+                    $("#idNumber").val(response.idno);
+                    $("#studentName").val(response.firstname + " " + response.lastname);
+                    
+                    // Get remaining sessions
+                    $.ajax({
+                        url: "/get_user_sessions/" + response.idno,
+                        type: "GET",
+                        success: function(sessionsData) {
+                            $("#remainingSession").val(sessionsData.user.remaining_sessions);
+                            // Close search modal and open the sit-in modal
+                            $("#searchModal").modal("hide");
+                            $("#sitInModal").modal("show");
+                        },
+                        error: function(xhr) {
+                            let errorMsg = "Error getting remaining sessions.";
+                            if (xhr.responseJSON && xhr.responseJSON.error) {
+                                errorMsg = xhr.responseJSON.error;
+                            }
+                            alert(errorMsg);
+                        }
+                    });
+                },
+                error: function(xhr) {
+                    let errorMsg = "Student not found.";
+                    if (xhr.responseJSON && xhr.responseJSON.error) {
+                        errorMsg = xhr.responseJSON.error;
+                    }
+                    alert(errorMsg);
+                }
+            });
+        }
+        else if (currentPath.includes('/sitin_page') || currentPath.includes('/current_sitins')) {
+            // For sitin page - search then redirect with search parameter
+            $.ajax({
+                url: "/search_student",
+                type: "GET",
+                data: { idno: studentId },
+                success: function(response) {
+                    // Close search modal
+                    $('#searchModal').modal('hide');
+                    
+                    // Redirect to the sit-in page to process the student
+                    window.location.href = `/sitin?search_id=${response.idno}`;
+                },
+                error: function(xhr) {
+                    let errorMsg = "Student not found.";
+                    if (xhr.responseJSON && xhr.responseJSON.error) {
+                        errorMsg = xhr.responseJSON.error;
+                    }
+                    alert(errorMsg);
+                }
+            });
+        }
+        else {
+            // Default behavior for other pages
+            $.ajax({
+                url: "/search_student",
+                type: "GET",
+                data: { idno: studentId },
+                success: function(response) {
+                    // Redirect to student view page
+                    window.location.href = `/view_student?id=${response.idno}`;
+                },
+                error: function(xhr) {
+                    let errorMsg = "Student not found.";
+                    if (xhr.responseJSON && xhr.responseJSON.error) {
+                        errorMsg = xhr.responseJSON.error;
+                    }
+                    alert(errorMsg);
+                }
+            });
+        }
+    });
+    
+    // Allow pressing Enter in the search input field
+    $('#searchInput').keypress(function(e) {
+        if (e.which === 13) { // Enter key
+            $('#searchStudentBtn').click();
+        }
+    });
+});
+</script>

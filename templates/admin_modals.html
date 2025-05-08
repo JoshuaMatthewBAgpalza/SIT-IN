@@ -1,0 +1,213 @@
+<!-- Upload Lab Schedule Modal -->
+<div class="modal fade" id="uploadLabScheduleModal" tabindex="-1" role="dialog" aria-labelledby="uploadLabScheduleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadLabScheduleModalLabel" style="font-size: 1.5rem; font-weight: 700;">Upload Lab Schedule</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="uploadLabScheduleForm" action="{{ url_for('upload_lab_schedule') }}" method="POST">
+                    <div class="form-group">
+                        <label for="laboratory"><i class="fas fa-door-open mr-2"></i>Laboratory Number</label>
+                        <select class="form-control" id="laboratory" name="laboratory" required>
+                            <option value="" disabled selected>Select Laboratory</option>
+                            <option value="524">524</option>
+                            <option value="526">526</option>
+                            <option value="528">528</option>
+                            <option value="530">530</option>
+                            <option value="542">542</option>
+                            <option value="544">544</option>
+                            <option value="517">517</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="day"><i class="fas fa-calendar mr-2"></i>Day</label>
+                        <select class="form-control" id="day" name="day" required>
+                            <option value="" disabled selected>Select Day</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="course"><i class="fas fa-book mr-2"></i>Course</label>
+                        <input type="text" class="form-control" id="course" name="course" placeholder="Enter course name or code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="instructor"><i class="fas fa-chalkboard-teacher mr-2"></i>Instructor</label>
+                        <input type="text" class="form-control" id="instructor" name="instructor" placeholder="Enter instructor name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="startTime"><i class="fas fa-clock mr-2"></i>Start Time</label>
+                        <input type="time" class="form-control" id="startTime" name="startTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endTime"><i class="fas fa-clock mr-2"></i>End Time</label>
+                        <input type="time" class="form-control" id="endTime" name="endTime" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Upload Schedule</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload Resource Materials Modal -->
+<div class="modal fade" id="uploadResourceMaterialsModal" tabindex="-1" role="dialog" aria-labelledby="uploadResourceMaterialsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadResourceMaterialsModalLabel" style="font-size: 1.5rem; font-weight: 700;">Upload Resource Materials</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="uploadResourceForm" action="{{ url_for('upload_resource_materials') }}" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="resourceTitle"><i class="fas fa-heading mr-2"></i>Title</label>
+                        <input type="text" class="form-control" id="resourceTitle" name="resourceTitle" placeholder="Enter resource title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="resourceDescription"><i class="fas fa-align-left mr-2"></i>Description</label>
+                        <textarea class="form-control" id="resourceDescription" name="resourceDescription" rows="3" placeholder="Enter resource description" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-file-upload mr-2"></i>Resource Type</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="resourceTypeFile" name="resourceType" value="file" class="custom-control-input" checked>
+                            <label class="custom-control-label" for="resourceTypeFile">Upload File</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="resourceTypeLink" name="resourceType" value="link" class="custom-control-input">
+                            <label class="custom-control-label" for="resourceTypeLink">Add Link</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="fileUploadGroup">
+                        <label for="resourceFile"><i class="fas fa-upload mr-2"></i>File</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="resourceFile" name="resourceFile">
+                            <label class="custom-file-label" for="resourceFile">Choose file</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="linkInputGroup" style="display: none;">
+                        <label for="resourceLink"><i class="fas fa-link mr-2"></i>Google Drive Link</label>
+                        <input type="url" class="form-control" id="resourceLink" name="resourceLink" placeholder="Enter Google Drive link">
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Upload Resource</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Search Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchModalLabel" style="font-size: 1.5rem; font-weight: 700;">Search Student</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="studentIdSearch"><i class="fas fa-id-card mr-2"></i>Student ID</label>
+                    <input type="text" class="form-control" id="studentIdSearch" placeholder="Enter student ID">
+                </div>
+                <div id="searchResults" class="mt-3">
+                    <!-- Search results will be displayed here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="searchStudentBtn">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    // Toggle between file upload and link input based on resource type selection
+    $('input[name="resourceType"]').change(function() {
+        if ($(this).val() === 'file') {
+            $('#fileUploadGroup').show();
+            $('#linkInputGroup').hide();
+            $('#resourceFile').attr('required', true);
+            $('#resourceLink').attr('required', false);
+        } else {
+            $('#fileUploadGroup').hide();
+            $('#linkInputGroup').show();
+            $('#resourceFile').attr('required', false);
+            $('#resourceLink').attr('required', true);
+        }
+    });
+    
+    // Update file input label with selected filename
+    $('.custom-file-input').on('change', function() {
+        var fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').html(fileName || 'Choose file');
+    });
+    
+    // Handle student search
+    $('#searchStudentBtn').click(function() {
+        var studentId = $('#studentIdSearch').val().trim();
+        if (!studentId) {
+            $('#searchResults').html('<div class="alert alert-warning">Please enter a student ID</div>');
+            return;
+        }
+        
+        // Show loading indicator
+        $('#searchResults').html('<div class="text-center"><div class="spinner-border text-primary" role="status"></div><div>Searching...</div></div>');
+        
+        // Perform AJAX search
+        $.ajax({
+            url: '/search_student',
+            type: 'GET',
+            data: { idno: studentId },
+            success: function(data) {
+                var html = '<div class="card mt-3">' +
+                    '<div class="card-header bg-primary text-white">Student Found</div>' +
+                    '<div class="card-body">' +
+                    '<h5 class="card-title">' + data.firstname + ' ' + data.lastname + '</h5>' +
+                    '<p class="card-text">ID: ' + data.idno + '<br>' +
+                    'Course: ' + data.course + '<br>' +
+                    'Year Level: ' + data.year_level + '</p>' +
+                    '<a href="/view_student?id=' + data.idno + '" class="btn btn-primary">View Profile</a> ' +
+                    '<a href="/sitin?search_id=' + data.idno + '" class="btn btn-success">Record Sit-in</a>' +
+                    '</div></div>';
+                $('#searchResults').html(html);
+            },
+            error: function(xhr) {
+                $('#searchResults').html('<div class="alert alert-danger">No student found with that ID</div>');
+            }
+        });
+    });
+    
+    // Allow enter key to trigger search
+    $('#studentIdSearch').keypress(function(e) {
+        if (e.which === 13) {
+            $('#searchStudentBtn').click();
+            return false;
+        }
+    });
+});
+</script> 

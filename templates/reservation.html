@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <title>Reservation</title>
+	
+<style>
+:root {
+    --primary-color: #B4121B;
+    --secondary-color: #8A0E15;
+    --accent-color: #E63946;
+    --light-color: #f8f9fa;
+    --dark-color: #000000;
+    --success-color: #2bc4a9;
+    --warning-color: #f9c74f;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f7fa;
+    color: #495057;
+    min-height: 100vh;
+}
+
+.header-banner {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 16px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.header-banner::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: #fff;
+    border-radius: 50% 50% 0 0;
+}
+
+.navbar {
+    background-color: #fff !important;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+
+.navbar .nav-link {
+    color: var(--dark-color) !important;
+    font-weight: 500;
+    padding: 10px 16px !important;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+    background-color: rgba(180, 18, 27, 0.1);
+    color: var(--primary-color) !important;
+}
+
+.navbar .nav-item.active .nav-link {
+    background-color: var(--primary-color);
+    color: white !important;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background: var(--dark-color);
+    color: white;
+    font-weight: 600;
+    padding: 18px 20px;
+    border-bottom: none;
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #e1e1e1;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    margin-bottom: 20px;
+    height: auto;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(180, 18, 27, 0.25);
+    background-color: #fff;
+}
+
+.btn {
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(180, 18, 27, 0.3);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+}
+
+label {
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 10px;
+    display: block;
+    font-size: 1.1rem;
+}
+
+select.form-control {
+    height: auto;
+    padding: 15px 20px;
+}
+
+small.text-muted {
+    font-size: 0.9rem;
+    display: block;
+    margin-top: 5px;
+    font-weight: 400;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+}
+
+.computer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.computer-item {
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #e1e1e1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.computer-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.computer-item.available {
+    border-color: var(--success-color);
+}
+
+.computer-item.selected {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.computer-status {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--success-color);
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.remaining-session {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.remaining-session h4 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.remaining-session p {
+    margin: 5px 0 0;
+    opacity: 0.9;
+}
+
+.lab-section {
+    display: none;
+}
+
+.lab-section.active {
+    display: block;
+}
+
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.time-slot {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.time-slot:hover {
+    background: rgba(180, 18, 27, 0.1);
+}
+
+.time-slot.selected {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+</style>
+</head>
+<body>
+<!-- Header Banner -->
+<div class="header-banner">
+    <div class="container text-center">
+        <h3 class="font-weight-bold mb-0">College of Computer Studies</h3>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user_dashboard') }}">
+                        <i class="fas fa-home mr-1"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('reservation') }}">
+                        <i class="fas fa-calendar-alt mr-1"></i> Reservation
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('sitin_history') }}">
+                        <i class="fas fa-history mr-1"></i> Sit-in History
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user_reservation_history') }}">
+                        <i class="fas fa-calendar-check mr-1"></i> Reservation History
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('view_lab_schedules') }}">
+                        <i class="fas fa-calendar-day mr-1"></i> Schedule
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('view_resources') }}">
+                        <i class="fas fa-file-alt mr-1"></i> Resources
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('view_points') }}">
+                        <i class="fas fa-award mr-1"></i> Points
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('profile') }}">
+                        <i class="fas fa-user mr-1"></i> Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">
+                        <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <!-- Remaining Session Card -->
+            <div class="remaining-session">
+                <h4>{{ remaining_sessions }}</h4>
+                <p>Remaining Sessions</p>
+            </div>
+            
+            <!-- Reservation Form Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-calendar-plus mr-2"></i> Make a Reservation
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="reservationForm" action="{{ url_for('reservation') }}" method="POST">
+                        <!-- ID Number -->
+                        <div class="form-group">
+                            <label for="idNumber">
+                                <i class="fas fa-id-card mr-2"></i> ID Number
+                            </label>
+                            <input type="text" class="form-control" id="idNumber" name="idNumber" value="{{ session['user_id'] }}" readonly>
+                        </div>
+
+                        <!-- Purpose -->
+                        <div class="form-group">
+                            <label for="purpose">
+                                <i class="fas fa-tasks mr-2"></i> Purpose
+                            </label>
+                            <select class="form-control" id="purpose" name="purpose" required>
+                                <option value="" disabled selected>Select a Purpose</option>
+                                <optgroup label="Programming Languages">
+                                    <option value="Python Programming">Python Programming</option>
+                                    <option value="C Programming">C Programming</option>
+                                    <option value="C# Programming">C# Programming</option>
+                                    <option value="Java Programming">Java Programming</option>
+                                    <option value=".NET Programming">.NET Programming</option>
+                                    <option value="PHP Programming">PHP Programming</option>
+                                </optgroup>
+                                <optgroup label="Other Purposes">
+                                    <option value="Project Work">Project Work</option>
+                                    <option value="Research">Research</option>
+                                    <option value="Assignment">Assignment</option>
+                                </optgroup>
+                            </select>
+                            <small class="text-muted">Select the purpose of your laboratory reservation</small>
+                        </div>
+
+                        <!-- Laboratory Selection -->
+                        <div class="form-group">
+                            <label for="laboratory">
+                                <i class="fas fa-door-open mr-2"></i> Laboratory Number
+                            </label>
+                            <select class="form-control" id="laboratory" name="laboratory" required>
+                                <option value="" disabled selected>Select Laboratory</option>
+                                {% for lab in labs %}
+                                <option value="{{ lab.number }}">Laboratory {{ lab.number }} ({{ lab.available_computers }} PCs Available)</option>
+                                {% endfor %}
+                            </select>
+                            <small class="text-muted">Choose the laboratory you want to reserve</small>
+                        </div>
+
+                        <!-- Computer Selection -->
+                                <div class="form-group">
+                            <label>
+                                <i class="fas fa-desktop mr-2"></i> Available Computers
+                            </label>
+                            {% for lab in labs %}
+                            <div class="lab-section" id="lab{{ lab.number }}">
+                                <div class="computer-grid">
+                                    {% for pc in lab.computers %}
+                                    {% if pc.status == 'Available' %}
+                                    <div class="computer-item available" data-pc="{{ pc.pc_number }}">
+                                        <i class="fas fa-desktop mb-2"></i>
+                                        <div>PC-{{ pc.pc_number }}</div>
+                                        <div class="computer-status">AVAILABLE</div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <input type="hidden" id="selectedComputer" name="computer" required>
+                            <small class="text-muted">Click on a computer to select it</small>
+                        </div>
+
+                        <!-- Date -->
+                                <div class="form-group">
+                            <label for="date">
+                                <i class="fas fa-calendar-day mr-2"></i> Date
+                            </label>
+                            <input type="text" class="form-control" id="date" name="date" placeholder="Select date" required>
+                            <small class="text-muted">Select the date for your reservation</small>
+                                </div>
+
+                        <!-- Time-In -->
+                        <div class="form-group">
+                            <label for="time_in">
+                                <i class="fas fa-clock mr-2"></i> Time-In
+                            </label>
+                            <input type="time" class="form-control" id="time_in" name="time_in" required>
+                            <small class="text-muted">Enter your preferred start time (24-hour format)</small>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-calendar-check mr-2"></i> Submit Reservation
+                            </button>
+                            <a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary btn-lg ml-2">
+                                <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Information Card -->
+            <div class="card mt-4">
+                <div class="card-header d-flex align-items-center">
+                    <i class="fas fa-info-circle mr-2"></i> Sit-in Information
+                </div>
+                <div class="card-body">
+                    <p>Please note that all reservations are subject to laboratory availability and staff approval. Your reservation may be canceled or rescheduled if:</p>
+                    <ul>
+                        <li>The laboratory is needed for scheduled classes</li>
+                        <li>There's maintenance or technical issues</li>
+                        <li>You have no remaining sessions</li>
+                    </ul>
+                    <p class="mb-0">For immediate assistance, please contact the CCS Laboratory Staff.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    $(document).ready(function() {
+        // Initialize date picker with hover
+        flatpickr("#date", {
+            minDate: "today",
+            maxDate: new Date().fp_incr(30), // Allow booking up to 30 days in advance
+            dateFormat: "Y-m-d",
+            disable: [
+                function(date) {
+                    // Disable Sundays (0 = Sunday)
+                    return date.getDay() === 0;
+                }
+            ],
+            // Enable hover state
+            onMouseOver: function(selectedDates, dateStr, instance) {
+                if (!instance.selectedDates.length) {
+                    instance.input.value = dateStr;
+                }
+            },
+            onMouseLeave: function(selectedDates, dateStr, instance) {
+                if (!instance.selectedDates.length) {
+                    instance.input.value = '';
+                }
+            }
+        });
+
+        // Set default time range
+        const timeInput = document.getElementById('time_in');
+        timeInput.min = "08:00";
+        timeInput.max = "20:00";
+
+        // Handle laboratory selection
+        $('#laboratory').change(function() {
+            const selectedLab = $(this).val();
+            $('.lab-section').removeClass('active');
+            $(`#lab${selectedLab}`).addClass('active');
+        });
+
+        // Handle computer selection
+        $('.computer-item').click(function() {
+            $('.computer-item').removeClass('selected');
+            $(this).addClass('selected');
+            $('#selectedComputer').val($(this).data('pc'));
+        });
+
+        // Form validation
+        $('#reservationForm').submit(function(e) {
+            if (!$('#selectedComputer').val()) {
+                e.preventDefault();
+                alert('Please select a computer');
+                return;
+            }
+
+            const timeIn = $('#time_in').val();
+            
+            if (timeIn) {
+                const hoursIn = parseInt(timeIn.split(':')[0]);
+                if (hoursIn < 8 || hoursIn >= 20) {
+                    e.preventDefault();
+                    alert('Please select a Time-In between 8:00 AM and 8:00 PM');
+                    return;
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

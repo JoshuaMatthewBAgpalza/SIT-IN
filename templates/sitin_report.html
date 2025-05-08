@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sit-in Reports - CCS Sit-In System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+   <style>
+    :root {
+        --primary-color: #B4121B;        /* Bold Red */
+        --secondary-color: #8A0E15;      /* Darker Red */
+        --accent-color: #D11D27;         /* Bright Red */
+        --light-color: #f8f9fa;          /* Light background */
+        --dark-color: #000000;           /* Pure Black */
+        --success-color: #2a9d8f;        /* Teal */
+        --warning-color: #e9c46a;        /* Gold */
+        --danger-color: #B4121B;         /* Same as primary */
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f7fa;
+        color: #495057;
+        min-height: 100vh;
+    }
+
+    .header-banner {
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 16px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header-banner::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        right: 0;
+        height: 20px;
+        background: #fff;
+        border-radius: 50% 50% 0 0;
+    }
+
+    .navbar {
+        background-color: #fff !important;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        border-bottom: 2px solid var(--primary-color);
+    }
+
+    .navbar .nav-link {
+        color: var(--dark-color) !important;
+        font-weight: 500;
+        padding: 10px 16px !important;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        margin: 0 2px;
+    }
+
+    .navbar .nav-link:hover {
+        background-color: rgba(180, 18, 27, 0.1);
+        color: var(--primary-color) !important;
+        transform: translateY(-2px);
+    }
+
+    .navbar .nav-item.active .nav-link {
+        background-color: var(--primary-color);
+        color: white !important;
+        box-shadow: 0 4px 8px rgba(180, 18, 27, 0.2);
+    }
+    
+    .navbar .navbar-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .navbar-collapse {
+        max-height: 80vh;
+        overflow-y: auto;
+        scrollbar-width: thin;
+    }
+    
+    .navbar-collapse::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .navbar-collapse::-webkit-scrollbar-thumb {
+        background-color: var(--primary-color);
+        border-radius: 10px;
+    }
+    
+    .badge-pill.badge-danger {
+        position: relative;
+        top: -5px;
+        margin-left: 3px;
+        font-size: 0.7rem;
+        padding: 3px 6px;
+        box-shadow: 0 2px 5px rgba(180, 18, 27, 0.3);
+        background-color: var(--danger-color);
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        margin-bottom: 25px;
+        overflow: hidden;
+        border-top: 3px solid var(--primary-color);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+
+    .card-header {
+        background: var(--dark-color);
+        color: white;
+        font-weight: 600;
+        padding: 18px 20px;
+        border-bottom: none;
+        border-radius: 15px 15px 0 0 !important;
+        border-bottom: 1px solid var(--primary-color);
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    .btn {
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        color: white;
+    }
+
+    .btn-primary {
+        background: var(--primary-color);
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: var(--secondary-color);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(180, 18, 27, 0.3);
+    }
+
+    .btn-success {
+        background: var(--success-color);
+        border: none;
+    }
+
+    .btn-success:hover {
+        background: #24a08c;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(42, 157, 143, 0.3);
+    }
+
+    .btn-danger {
+        background: var(--danger-color);
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background: var(--secondary-color);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(180, 18, 27, 0.3);
+    }
+
+    .btn-sm {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+
+    .table {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .table thead th {
+        background-color: var(--dark-color);
+        color: white;
+        border: none;
+        font-weight: 500;
+        padding: 12px 15px;
+        border-bottom: 2px solid var(--primary-color);
+    }
+
+    .table td {
+        padding: 12px 15px;
+        vertical-align: middle;
+        border-color: #f0f0f0;
+    }
+
+    .table tbody tr:hover {
+        background-color: rgba(180, 18, 27, 0.05);
+    }
+
+    .badge {
+        padding: 6px 10px;
+        font-weight: 500;
+        border-radius: 8px;
+        color: white;
+    }
+
+    .badge-success {
+        background-color: var(--success-color);
+    }
+
+    .badge-warning {
+        background-color: var(--warning-color);
+        color: var(--dark-color);
+    }
+
+    .badge-danger {
+        background-color: var(--danger-color);
+    }
+
+    .modal-content {
+        border-radius: 15px;
+        border: none;
+        overflow: hidden;
+        border-top: 3px solid var(--primary-color);
+    }
+
+    .modal-header {
+        background: var(--dark-color);
+        color: white;
+        border-bottom: 1px solid var(--primary-color);
+    }
+
+    .modal-header .close {
+        color: white;
+        opacity: 0.8;
+    }
+
+    .modal-header .close:hover {
+        opacity: 1;
+        color: var(--primary-color);
+    }
+
+    .modal-footer {
+        border-top: none;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #e1e1e1;
+        padding: 12px 15px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        background-color: #f8f9fa;
+        margin-bottom: 15px;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(180, 18, 27, 0.25);
+        background-color: #fff;
+    }
+
+    .filter-bar {
+        background-color: white;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        border-top: 3px solid var(--primary-color);
+    }
+
+    .page-item.active .page-link {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    .page-link {
+        color: var(--primary-color);
+    }
+
+    .page-link:hover {
+        color: var(--secondary-color);
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        margin-bottom: 20px;
+    }
+
+    @media print {
+        .no-print {
+            display: none;
+        }
+        .navbar, .header-banner {
+            display: none;
+        }
+        .card {
+            box-shadow: none;
+            border: 1px solid #ddd;
+            border-top: 3px solid var(--primary-color);
+        }
+        .table {
+            width: 100%;
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+        .print-header h1 {
+            color: var(--primary-color);
+        }
+    }
+</style>
+</head>
+
+<body>
+    <!-- Header Banner -->
+    <div class="header-banner">
+        <div class="container text-center">
+            <h3 class="font-weight-bold mb-0">College of Computer Studies Admin</h3>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-lg-none" href="{{ url_for('admin_dashboard') }}">
+                <i class="fas fa-university mr-1"></i> CCS Admin
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
+                            <i class="fas fa-home mr-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#searchModal">
+                            <i class="fas fa-search mr-1"></i> Search
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('view_students') }}">
+                            <i class="fas fa-user-graduate mr-1"></i> Student
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('sitin_page') }}">
+                            <i class="fas fa-chair mr-1"></i> Sit-in
+                            {% if active_count > 0 %}
+                                <span class="badge badge-pill badge-danger">{{ active_count }}</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('current_sitins') }}">
+                            <i class="fas fa-clipboard-list mr-1"></i> Records
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ url_for('sitin_report') }}">
+                            <i class="fas fa-chart-bar mr-1"></i> Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('feedback_report') }}">
+                            <i class="fas fa-comment-alt mr-1"></i> Feedback
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('lab_usage_points') }}">
+                            <i class="fas fa-award mr-1"></i> Points
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('leaderboard') }}">
+                            <i class="fas fa-trophy mr-1"></i> Leaderboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_reservation') }}">
+                            <i class="fas fa-calendar-alt mr-1"></i> Reservations
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('computer_control') }}">
+                            <i class="fas fa-desktop mr-1"></i> Computers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="{{ url_for('logout') }}">
+                            <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchModalLabel">Search Student</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="searchInput"><i class="fas fa-id-card mr-1"></i> Student ID</label>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Enter student ID">
+                    </div>
+                    <button class="btn btn-primary" id="searchStudentBtn">
+                        <i class="fas fa-search mr-1"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <div>
+                            <i class="fas fa-chart-pie mr-2"></i> Sit-In Analytics
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="chart-container">
+                                    <canvas id="labChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="chart-container">
+                                    <canvas id="purposeChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <div>
+                            <i class="fas fa-list mr-2"></i> Sit-In Records
+                        </div>
+                        <div>
+                            <button id="csvBtn" class="btn btn-sm btn-success mr-1"><i class="fas fa-file-csv mr-1"></i> CSV</button>
+                            <button id="excelBtn" class="btn btn-sm btn-primary mr-1"><i class="fas fa-file-excel mr-1"></i> Excel</button>
+                            <button id="pdfBtn" class="btn btn-sm btn-danger mr-1"><i class="fas fa-file-pdf mr-1"></i> PDF</button>
+                            <button id="printBtn" class="btn btn-sm btn-info"><i class="fas fa-print mr-1"></i> Print</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="filter-bar d-flex justify-content-between align-items-center mb-4">
+                            <div class="d-flex align-items-center">
+                                <div class="mr-3">
+                                    <label for="dateFilter" class="mb-0 mr-2">Date:</label>
+                                    <input type="date" id="dateFilter" class="form-control form-control-sm">
+                                </div>
+                                <div>
+                                    <label for="statusFilter" class="mb-0 mr-2">Status:</label>
+                                    <select id="statusFilter" class="form-control form-control-sm">
+                                        <option value="all">All</option>
+                                        <option value="completed">Completed</option>
+                                        <option value="active">Active</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="position-relative">
+                                <input type="text" id="tableSearch" class="form-control form-control-sm" placeholder="Search...">
+                                <i class="fas fa-search position-absolute" style="right: 10px; top: 10px; color: #777;"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="sitinTable">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-id-card mr-1"></i> ID Number</th>
+                                        <th><i class="fas fa-user mr-1"></i> Name</th>
+                                        <th><i class="fas fa-tasks mr-1"></i> Purpose</th>
+                                        <th><i class="fas fa-laptop-house mr-1"></i> Laboratory</th>
+                                        <th><i class="fas fa-sign-in-alt mr-1"></i> Login</th>
+                                        <th><i class="fas fa-sign-out-alt mr-1"></i> Logout</th>
+                                        <th><i class="fas fa-info-circle mr-1"></i> Status</th>
+                                        <th><i class="fas fa-calendar-alt mr-1"></i> Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if sitins %}
+                                        {% for sitin in sitins %}
+                                            <tr>
+                                                <td>{{ sitin.student_id }}</td>
+                                                <td>{{ sitin.firstname }} {{ sitin.lastname }}</td>
+                                                <td>{{ sitin.purpose }}</td>
+                                                <td>{{ sitin.lab_number }}</td>
+                                                <td>{{ sitin.login_time if sitin.login_time else 'N/A' }}</td>
+                                                <td>{{ sitin.logout_time if sitin.logout_time else 'N/A' }}</td>
+                                                <td>
+                                                    {% if sitin.logout_time %}
+                                                        <span class="badge badge-success">Completed</span>
+                                                    {% else %}
+                                                        <span class="badge badge-warning">Active</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ sitin.timestamp.split(' ')[0] if ' ' in sitin.timestamp else sitin.timestamp }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="8" class="text-center py-4">
+                                                <i class="fas fa-info-circle fa-2x mb-3 text-muted"></i>
+                                                <p class="mb-0 text-muted">No sit-in records available</p>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        {% if sitins and sitins|length > 10 %}
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <div>
+                                <p class="text-muted mb-0">Showing 1 to {{ sitins|length if sitins|length < 10 else 10 }} of {{ sitins|length }} entries</p>
+                            </div>
+                            <nav>
+                                <ul class="pagination pagination-sm mb-0" id="pagination">
+                                    <!-- Pagination will be generated by JavaScript -->
+                                </ul>
+                            </nav>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Table search functionality
+            $("#tableSearch").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#sitinTable tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+                updatePagination();
+            });
+            
+            // Date filter
+            $("#dateFilter").on("change", function() {
+                var date = $(this).val();
+                if (date) {
+                    $("#sitinTable tbody tr").hide();
+                    $("#sitinTable tbody tr").filter(function() {
+                        return $(this).find("td:last-child").text().trim().includes(date);
+                    }).show();
+                } else {
+                    $("#sitinTable tbody tr").show();
+                }
+                updatePagination();
+            });
+            
+            // Status filter
+            $("#statusFilter").on("change", function() {
+                var status = $(this).val().toLowerCase();
+                if (status === "all") {
+                    $("#sitinTable tbody tr").show();
+                } else {
+                    $("#sitinTable tbody tr").hide();
+                    $("#sitinTable tbody tr").filter(function() {
+                        return $(this).find("td:nth-child(7)").text().toLowerCase().includes(status);
+                    }).show();
+                }
+                updatePagination();
+            });
+            
+            // Initialize charts if there is data
+            initCharts();
+            
+            // Initialize pagination
+            updatePagination();
+            
+            // Search student button click handler
+            $('#searchStudentBtn').click(function() {
+                const studentId = $('#searchInput').val().trim();
+                if (studentId === '') {
+                    alert('Please enter a student ID');
+                    return;
+                }
+                
+                window.location.href = `/view_student?id=${studentId}`;
+            });
+            
+            // Export to CSV
+            $("#csvBtn").click(function() {
+                exportTableToCSV('sitin_reports.csv');
+            });
+            
+            // Export to Excel
+            $("#excelBtn").click(function() {
+                exportTableToExcel('sitinTable', 'sitin_reports');
+            });
+            
+            // Export to PDF
+            $("#pdfBtn").click(function() {
+                exportTableToPDF();
+            });
+            
+            // Print functionality
+            $("#printBtn").click(function() {
+                window.print();
+            });
+        });
+        
+        function updatePagination() {
+            const rowsPerPage = 10;
+            const visibleRows = $("#sitinTable tbody tr:visible").length;
+            const totalPages = Math.ceil(visibleRows / rowsPerPage);
+            
+            let paginationHtml = '';
+            
+            if (visibleRows > rowsPerPage) {
+                paginationHtml += `
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>`;
+                    
+                for (let i = 1; i <= totalPages; i++) {
+                    paginationHtml += `
+                        <li class="page-item ${i === 1 ? 'active' : ''}">
+                            <a class="page-link" href="#" data-page="${i}">${i}</a>
+                        </li>`;
+                }
+                
+                paginationHtml += `
+                    <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>`;
+                
+                $("#pagination").html(paginationHtml);
+                
+                // Set up page click handlers
+                $(".page-link").click(function(e) {
+                    e.preventDefault();
+                    const page = $(this).data('page');
+                    if (page) {
+                        showPage(page, rowsPerPage);
+                        $(".page-item").removeClass("active");
+                        $(this).parent().addClass("active");
+                    }
+                });
+                
+                // Show first page initially
+                showPage(1, rowsPerPage);
+            } else {
+                $("#pagination").empty();
+                $("#sitinTable tbody tr:visible").show();
+            }
+        }
+        
+        function showPage(page, rowsPerPage) {
+            const start = (page - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            
+            $("#sitinTable tbody tr:visible").hide();
+            $("#sitinTable tbody tr:visible").slice(start, end).show();
+        }
+        
+        function initCharts() {
+            // Create safe data objects (assuming these are passed from the server)
+            try {
+                const labData = {% if lab_data %}{{ lab_data|tojson|safe }}{% else %}[0, 0, 0, 0, 0, 0]{% endif %};
+                const purposeData = {% if purpose_data %}{{ purpose_data|tojson|safe }}{% else %}[0, 0, 0, 0, 0, 0]{% endif %};
+                
+                // Lab usage chart
+                const labChartCtx = document.getElementById('labChart').getContext('2d');
+                new Chart(labChartCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['524', '526', '528', '530', '542', '544'],
+                        datasets: [{
+                            data: labData,
+                            backgroundColor: [
+                                '#4361ee', '#3a0ca3', '#4cc9f0', '#2bc4a9', '#ef476f', '#f9c74f'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                fontFamily: 'Poppins',
+                                fontSize: 12
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Laboratory Usage',
+                            fontFamily: 'Poppins',
+                            fontSize: 16,
+                            fontColor: '#495057'
+                        }
+                    }
+                });
+                
+                // Purpose chart
+                const purposeChartCtx = document.getElementById('purposeChart').getContext('2d');
+                new Chart(purposeChartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['C Programming', 'C# Programming', 'Java Programming', '.NET Programming', 'PHP Programming', 'Python Programming'],
+                        datasets: [{
+                            label: 'Purpose Count',
+                            data: purposeData,
+                            backgroundColor: '#4361ee',
+                            borderColor: '#3a0ca3',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    fontFamily: 'Poppins'
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    fontFamily: 'Poppins',
+                                    fontSize: 10
+                                }
+                            }]
+                        },
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Programming Language Usage',
+                            fontFamily: 'Poppins',
+                            fontSize: 16,
+                            fontColor: '#495057'
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error initializing charts:', error);
+                // If there's an error, just hide the chart containers
+                $('.chart-container').hide();
+            }
+        }
+        
+        // Function to export table to CSV
+        function exportTableToCSV(filename) {
+            try {
+                var table = document.getElementById("sitinTable");
+                if (!table) {
+                    console.error("Table not found");
+                    alert("Could not find table to export");
+                    return;
+                }
+                
+                // Use XLSX to create CSV
+                var ws = XLSX.utils.table_to_sheet(table);
+                var csv_string = XLSX.utils.sheet_to_csv(ws);
+                
+                // Create a Blob and trigger download
+                var blob = new Blob([csv_string], { type: 'text/csv;charset=utf-8;' });
+                
+                if (navigator.msSaveBlob) { // IE 10+
+                    navigator.msSaveBlob(blob, filename);
+                } else {
+                    var link = document.createElement("a");
+                    if (link.download !== undefined) {
+                        var url = URL.createObjectURL(blob);
+                        link.setAttribute("href", url);
+                        link.setAttribute("download", filename);
+                        link.style.visibility = 'hidden';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                    }
+                }
+            } catch (e) {
+                console.error("CSV export error:", e);
+                alert("Failed to export CSV file: " + e.message);
+            }
+        }
+        
+        // Function to export table to Excel
+        function exportTableToExcel(tableID, filename = '') {
+            try {
+                var table = document.getElementById(tableID);
+                if (!table) {
+                    console.error("Table not found");
+                    alert("Could not find table to export");
+                    return;
+                }
+                
+                var wb = XLSX.utils.book_new();
+                var ws = XLSX.utils.table_to_sheet(table, {raw: true});
+                
+                XLSX.utils.book_append_sheet(wb, ws, "Sit-in Reports");
+                XLSX.writeFile(wb, filename + '.xlsx');
+            } catch (e) {
+                console.error("Excel export error:", e);
+                alert("Failed to export Excel file: " + e.message);
+            }
+        }
+        
+        // Function to export table to PDF
+        function exportTableToPDF() {
+            try {
+                const doc = new jsPDF('l', 'mm', 'a4');
+                
+                // Add title
+                doc.setFontSize(18);
+                doc.text("University of Cebu Main Campus", 14, 20);
+                doc.setFontSize(12);
+                doc.text("College of Computer Studies " , 14, 25);
+				doc.setFontSize(12);
+				doc.text("Sitin Monitoring System " , 14, 30);
+				doc.setFontSize(12);
+				
+     
+                
+                // Create table
+                doc.autoTable({
+                    html: '#sitinTable',
+                    startY: 40,
+                    theme: 'grid',
+                    styles: {
+                        fontSize: 8,
+                        cellPadding: 2,
+                        overflow: 'linebreak'
+                    },
+                    columnStyles: {
+                        0: {cellWidth: 20}, // ID
+                        1: {cellWidth: 30}, // Name
+                        2: {cellWidth: 30}, // Purpose
+                        3: {cellWidth: 15}, // Lab
+                        4: {cellWidth: 20}, // Login
+                        5: {cellWidth: 20}, // Logout
+                        6: {cellWidth: 15}, // Status
+                        7: {cellWidth: 20}  // Date
+                    },
+                    margin: {top: 40}
+                });
+                
+                // Save the PDF
+                doc.save('sitin_reports.pdf');
+            } catch (error) {
+                console.error('PDF Export Error:', error);
+                alert('Error exporting to PDF: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Reservation Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <style>
+    :root {
+        --primary-color: #B4121B;
+        --secondary-color: #8C0D15;
+        --accent-color: #D6454F;
+        --light-color: #f8f9fa;
+        --dark-color: #000000;
+        --success-color: #2bc4a9;
+        --warning-color: #f9c74f;
+        --danger-color: #B4121B;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f7fa;
+        color: #495057;
+        min-height: 100vh;
+    }
+
+    .header-banner {
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 16px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header-banner::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        right: 0;
+        height: 20px;
+        background: #fff;
+        border-radius: 50% 50% 0 0;
+    }
+
+    .navbar {
+        background-color: #fff !important;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
+
+    .navbar .nav-link {
+        color: var(--dark-color) !important;
+        font-weight: 500;
+        padding: 10px 16px !important;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .navbar .nav-link:hover {
+        background-color: rgba(180, 18, 27, 0.1);
+        color: var(--primary-color) !important;
+    }
+
+    .navbar .nav-item.active .nav-link {
+        background-color: var(--primary-color);
+        color: white !important;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        margin-bottom: 25px;
+        overflow: hidden;
+        border-top: 3px solid var(--primary-color);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+
+    .card-header {
+        background: var(--dark-color);
+        color: white;
+        font-weight: 600;
+        padding: 18px 20px;
+        border-bottom: 2px solid var(--primary-color) !important;
+        border-radius: 15px 15px 0 0 !important;
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #e1e1e1;
+        padding: 12px 15px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        background-color: #f8f9fa;
+        margin-bottom: 15px;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(180, 18, 27, 0.25);
+        background-color: #fff;
+    }
+
+    .btn {
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: var(--primary-color);
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: var(--secondary-color);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(180, 18, 27, 0.3);
+    }
+
+    .btn-success {
+        background: var(--success-color);
+        border: none;
+    }
+
+    .btn-success:hover {
+        background: #24a08c;
+        transform: translateY(-3px);
+    }
+
+    .btn-danger {
+        background: var(--danger-color);
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background: #8C0D15;
+        transform: translateY(-3px);
+    }
+
+    .table {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .table thead th {
+        background-color: var(--dark-color);
+        color: white;
+        border: none;
+        padding: 15px;
+        border-bottom: 2px solid var(--primary-color);
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(180, 18, 27, 0.05);
+    }
+
+    .badge-pill {
+        padding: 0.5em 1em;
+        font-weight: 500;
+    }
+
+    .badge-pending {
+        background-color: var(--warning-color);
+        color: #212529;
+    }
+
+    .badge-approved {
+        background-color: var(--success-color);
+        color: white;
+    }
+
+    .badge-rejected {
+        background-color: var(--danger-color);
+        color: white;
+    }
+
+    .nav-tabs {
+        border-bottom: 2px solid #dee2e6;
+        margin-bottom: 20px;
+    }
+
+    .nav-tabs .nav-link {
+        border: none;
+        border-bottom: 2px solid transparent;
+        color: #6c757d;
+        font-weight: 500;
+        padding: 10px 20px;
+        margin-bottom: -2px;
+    }
+
+    .nav-tabs .nav-link.active {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--primary-color);
+        background-color: transparent;
+    }
+
+    /* Red scrollbar for navbar collapse */
+    .navbar-collapse::-webkit-scrollbar {
+        width: 8px;
+    }
+    .navbar-collapse::-webkit-scrollbar-thumb {
+        background-color: var(--primary-color);
+        border-radius: 4px;
+    }
+
+    /* Modal header styling */
+    .modal-header {
+        background-color: var(--dark-color);
+        color: white;
+        border-bottom: 2px solid var(--primary-color);
+    }
+
+    /* Filter bar styling */
+    .filter-bar {
+        border-top: 3px solid var(--primary-color);
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+    }
+
+    @media print {
+        .navbar, .card-header h5 button, .btn-refresh, 
+        .btn-info, .no-print, .header-banner {
+            display: none !important;
+        }
+        
+        .card {
+            border: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border-top: 3px solid var(--primary-color) !important;
+        }
+        
+        .card-body {
+            padding: 0 !important;
+        }
+        
+        table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+        }
+        
+        th, td {
+            padding: 5px !important;
+            text-align: center !important;
+        }
+        
+        .print-header {
+            display: block !important;
+            text-align: center !important;
+            margin: 0 auto 15px auto !important;
+            width: 100% !important;
+            color: var(--primary-color) !important;
+        }
+        
+        .print-header h1 {
+            font-size: 18px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-weight: bold !important;
+            color: var(--primary-color) !important;
+        }
+        
+        .print-header h2 {
+            font-size: 16px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-weight: bold !important;
+        }
+        
+        .print-header h3 {
+            font-size: 14px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        .print-header .date {
+            font-size: 12px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-style: italic !important;
+        }
+    }
+
+    .print-header {
+        display: none;
+    }
+</style>
+</head>
+<body>
+    <!-- Print Header (visible only when printing) -->
+    <div class="print-header">
+        <h1>University of Cebu Main Campus</h1>
+        <h2>College of Computer Studies</h2>
+        <h3>Sitin Monitoring System</h3>
+    </div>
+
+    <!-- Header Banner -->
+    <div class="header-banner">
+        <div class="container text-center">
+            <h3 class="font-weight-bold mb-0">College of Computer Studies Admin</h3>
+        </div>
+    </div>
+
+    <!-- Include Admin Navbar -->
+    {% include 'admin_navbar.html' %}
+    {% include 'admin_modals.html' %}
+
+    <!-- Add this after the navbar -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="container py-5">
+        <!-- Pending Reservations -->
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="fas fa-clock mr-2"></i> Pending Approvals
+                </div>
+                <div>
+                    <button class="btn btn-sm btn-light" onclick="window.location.reload()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <button class="btn btn-sm btn-info no-print" onclick="window.print()">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Student</th>
+                                <th>Laboratory</th>
+                                <th>Computer</th>
+                                <th>Purpose</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if reservations %}
+                                {% for reservation in reservations %}
+                                    {% if reservation.status == 'Pending' %}
+                                    <tr>
+                                        <td>{{ reservation.id }}</td>
+                                        <td>{{ reservation.firstname }} {{ reservation.lastname }} ({{ reservation.student_id }})</td>
+                                        <td>Laboratory {{ reservation.laboratory_number }}</td>
+                                        <td>PC-{{ reservation.computer_number }}</td>
+                                        <td>{{ reservation.purpose }}</td>
+                                        <td>{{ reservation.reservation_date }}</td>
+                                        <td>
+                                            <strong>Time:</strong> {{ reservation.reservation_time }}<br>
+                                            {% if reservation.status == 'Completed' and reservation.completed_at %}
+                                            <small class="text-muted"><strong>Completed:</strong> {{ reservation.completed_at }}</small>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <form method="POST" action="{{ url_for('update_reservation_status') }}" class="d-inline">
+                                                <input type="hidden" name="reservation_id" value="{{ reservation.id }}">
+                                                <input type="hidden" name="status" value="Approved">
+                                                <input type="hidden" name="laboratory_number" value="{{ reservation.laboratory_number }}">
+                                                <input type="hidden" name="computer_number" value="{{ reservation.computer_number }}">
+                                                <button type="submit" class="btn btn-sm btn-success" title="Approve">
+                                                    <i class="fas fa-check"></i> Approve
+                                                </button>
+                                            </form>
+                                            <form method="POST" action="{{ url_for('update_reservation_status') }}" class="d-inline ml-1">
+                                                <input type="hidden" name="reservation_id" value="{{ reservation.id }}">
+                                                <input type="hidden" name="status" value="Rejected">
+                                                <button type="submit" class="btn btn-sm btn-danger" title="Reject">
+                                                    <i class="fas fa-times"></i> Reject
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="9" class="text-center py-4">
+                                        <i class="fas fa-info-circle mr-1 text-muted"></i>
+                                        No pending reservations available at this time.
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reservation History -->
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-history mr-2"></i> Reservation History
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-info no-print" onclick="window.print()">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Student</th>
+                                <th>Laboratory</th>
+                                <th>Computer</th>
+                                <th>Purpose</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Completed At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if reservations %}
+                                {% for reservation in reservations %}
+                                    {% if reservation.status != 'Pending' %}
+                                    <tr>
+                                        <td>{{ reservation.id }}</td>
+                                        <td>{{ reservation.firstname }} {{ reservation.lastname }} ({{ reservation.student_id }})</td>
+                                        <td>Laboratory {{ reservation.laboratory_number }}</td>
+                                        <td>PC-{{ reservation.computer_number }}</td>
+                                        <td>{{ reservation.purpose }}</td>
+                                        <td>{{ reservation.reservation_date }}</td>
+                                        <td>
+                                            <strong>Time:</strong> {{ reservation.reservation_time }}<br>
+                                            {% if reservation.status == 'Completed' and reservation.completed_at %}
+                                            <small class="text-muted"><strong>Completed:</strong> {{ reservation.completed_at }}</small>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if reservation.status == 'Approved' %}
+                                                <span class="badge badge-pill badge-success">Approved</span>
+                                            {% elif reservation.status == 'Rejected' %}
+                                                <span class="badge badge-pill badge-danger">Rejected</span>
+                                            {% elif reservation.status == 'Completed' %}
+                                                <span class="badge badge-pill badge-info">Completed</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ reservation.completed_at if reservation.completed_at else 'N/A' }}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="9" class="text-center py-4">
+                                        <i class="fas fa-info-circle mr-1 text-muted"></i>
+                                        No reservation history available.
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'search_modal.html' %}
+
+    <!-- Lab Usage Points Modal -->
+    <div class="modal fade" id="labUsageModal" tabindex="-1" role="dialog" aria-labelledby="labUsageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="labUsageModalLabel">
+                        <i class="fas fa-award mr-2"></i> Lab Usage Points
+                    </h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-3 text-info">
+                        <i class="fas fa-info-circle mr-1"></i> Lab Usage Points are awarded to students for using the lab. 3 points are equivalent to 1 sitin session.
+                    </p>
+                    
+                    <form id="labUsagePointsForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="studentId"><i class="fas fa-id-card mr-1"></i> Student ID</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="pointsStudentId" placeholder="Enter student ID" required>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button" id="findStudentForPointsBtn">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="studentName"><i class="fas fa-user mr-1"></i> Student Name</label>
+                                <input type="text" class="form-control" id="pointsStudentName" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="currentPoints"><i class="fas fa-coins mr-1"></i> Current Points</label>
+                                <input type="number" class="form-control" id="currentPoints" readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="pointsToAdd"><i class="fas fa-plus-circle mr-1"></i> Points to Add</label>
+                                <input type="number" class="form-control" id="pointsToAdd" min="1" value="3" required>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save mr-1"></i> Save Points
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+    
+    <script>
+        // Add this script for Lab Usage Points modal
+        $(document).ready(function() {
+            // Find student for points
+            $("#findStudentForPointsBtn").click(function() {
+                const studentId = $("#pointsStudentId").val().trim();
+                if (!studentId) {
+                    alert("Please enter a student ID");
+                    return;
+                }
+                
+                // Get student details via AJAX
+                $.ajax({
+                    url: `/get_student?id=${studentId}`,
+                    type: "GET",
+                    success: function(response) {
+                        if (response.error) {
+                            alert(response.error);
+                            return;
+                        }
+                        
+                        $("#pointsStudentName").val(`${response.firstname} ${response.lastname}`);
+                        
+                        // Calculate current points based on remaining sessions (3 points = 1 session)
+                        const remainingSessions = response.remaining_sessions || 0;
+                        const currentPoints = remainingSessions * 3;
+                        $("#currentPoints").val(currentPoints);
+                    },
+                    error: function() {
+                        alert("Error finding student. Please try again.");
+                    }
+                });
+            });
+            
+            // Submit lab usage points
+            $("#labUsagePointsForm").submit(function(e) {
+                e.preventDefault();
+                
+                const studentId = $("#pointsStudentId").val().trim();
+                const pointsToAdd = parseInt($("#pointsToAdd").val(), 10);
+                
+                if (!studentId || isNaN(pointsToAdd) || pointsToAdd < 1) {
+                    alert("Please enter valid student ID and points");
+                    return;
+                }
+                
+                // Convert points to sessions (3 points = 1 session)
+                const sessionsToAdd = Math.floor(pointsToAdd / 3);
+                
+                // Update sessions via AJAX
+                $.ajax({
+                    url: "/add_sessions",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        student_id: studentId,
+                        sessions: sessionsToAdd
+                    }),
+                    success: function(response) {
+                        if (response.error) {
+                            alert(response.error);
+                            return;
+                        }
+                        
+                        alert("Points added successfully!");
+                        
+                        // Update current points display
+                        const newSessions = response.remaining_sessions || 0;
+                        const newPoints = newSessions * 3;
+                        $("#currentPoints").val(newPoints);
+                    },
+                    error: function() {
+                        alert("Error adding points. Please try again.");
+                    }
+                });
+            });
+
+            // Add print PDF functionality
+            $('.btn-info[onclick="window.print()"]').click(function(e) {
+                const isPDF = confirm("Would you like to export as PDF instead of printing?");
+                if (isPDF) {
+                    e.preventDefault();
+                    // Determine which section to export based on the button clicked
+                    const isPending = $(this).closest('.card-header').find('.fa-clock').length > 0;
+                    exportTableToPDF(isPending ? 'pending-reservations' : 'reservation-history');
+                } else {
+                    // Continue with normal print
+                    addDateToPrintHeader();
+                }
+            });
+
+            // Function to export table to PDF
+            function exportTableToPDF(section) {
+                try {
+                    const doc = new jsPDF('l', 'mm', 'a4');
+                    
+                    // Calculate column widths and total width based on section
+                    const numColumns = 9; // Both tables have 9 columns
+                    const columnWidths = [15, 35, 25, 15, 30, 20, 15, 15, 15]; // Adjust widths for specific columns
+                    
+                    // Add header as first rows of table instead of separate text
+                    const headerRows = [
+                        Array(numColumns).fill('').map((v, i) => i === Math.floor(numColumns/2) ? 'University of Cebu Main Campus' : ''),
+                        Array(numColumns).fill('').map((v, i) => i === Math.floor(numColumns/2) ? 'College of Computer Studies' : ''),
+                        Array(numColumns).fill('').map((v, i) => i === Math.floor(numColumns/2) ? 'Sitin Monitoring System' : ''),
+                        Array(numColumns).fill('') // Empty row as spacer
+                    ];
+                    
+                    // Add report title based on section
+                    const reportTitle = section === 'pending-reservations' ? 'Pending Reservations' : 'Reservation History';
+                    headerRows.push(Array(numColumns).fill('').map((v, i) => i === Math.floor(numColumns/2) ? reportTitle : ''));
+                    
+                    // Get current date
+                    const today = new Date();
+                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    const dateString = today.toLocaleDateString('en-US', options);
+                    headerRows.push(Array(numColumns).fill('').map((v, i) => i === Math.floor(numColumns/2) ? 'Date: ' + dateString : ''));
+                    headerRows.push(Array(numColumns).fill('')); // Empty row as spacer
+                    
+                    // Get the target table index (first table for pending, second for history)
+                    const tableIndex = section === 'pending-reservations' ? 0 : 1;
+                    const table = document.getElementsByClassName('table')[tableIndex];
+                    
+                    // Get table headers and data
+                    const tableData = [];
+                    
+                    // Get headers 
+                    const headerRow = [];
+                    const headerCells = table.querySelectorAll('thead th');
+                    headerCells.forEach((cell, index) => {
+                        if (!(section === 'pending-reservations' && index === 8)) { // Skip Actions column for pending
+                            headerRow.push(cell.textContent.trim());
+                        }
+                    });
+                    
+                    if (headerRow.length < numColumns) {
+                        // Fill remaining columns for pending (skipped Actions)
+                        while (headerRow.length < numColumns) {
+                            headerRow.push('');
+                        }
+                    }
+                    
+                    tableData.push(headerRow);
+                    
+                    // Get visible rows
+                    const rows = table.querySelectorAll('tbody tr:not([style*="display: none"])');
+                    rows.forEach(row => {
+                        const rowData = [];
+                        const cells = row.querySelectorAll('td');
+                        cells.forEach((cell, index) => {
+                            if (!(section === 'pending-reservations' && index === 8)) { // Skip Actions column for pending
+                                rowData.push(cell.textContent.replace(/^\s*[\r\n]/gm, '').trim());
+                            }
+                        });
+                        
+                        if (rowData.length < numColumns) {
+                            // Fill remaining columns for pending (skipped Actions)
+                            while (rowData.length < numColumns) {
+                                rowData.push('');
+                            }
+                        }
+                        
+                        tableData.push(rowData);
+                    });
+                    
+                    // Combine header rows with table data
+                    const fullTableData = [...headerRows, ...tableData];
+                    
+                    // Create table with autoTable plugin
+                    doc.autoTable({
+                        startY: 20,
+                        head: [],
+                        body: fullTableData,
+                        theme: 'grid',
+                        styles: {
+                            fontSize: 8,
+                            cellPadding: 2,
+                            overflow: 'linebreak',
+                            halign: 'center'
+                        },
+                        columnStyles: {
+                            0: {cellWidth: columnWidths[0]},
+                            1: {cellWidth: columnWidths[1]},
+                            2: {cellWidth: columnWidths[2]},
+                            3: {cellWidth: columnWidths[3]},
+                            4: {cellWidth: columnWidths[4]},
+                            5: {cellWidth: columnWidths[5]},
+                            6: {cellWidth: columnWidths[6]},
+                            7: {cellWidth: columnWidths[7]},
+                            8: {cellWidth: columnWidths[8]}
+                        },
+                        didParseCell: function(data) {
+                            // Apply special styles to header rows
+                            if (data.row.index < 7) {
+                                data.cell.styles.fillColor = [255, 255, 255]; // White background
+                                data.cell.styles.textColor = [0, 0, 0]; // Black text
+                                
+                                // Make university name larger
+                                if (data.row.index === 0 && data.column.index === Math.floor(numColumns/2)) {
+                                    data.cell.styles.fontSize = 12;
+                                    data.cell.styles.fontStyle = 'bold';
+                                }
+                                // Make college name medium
+                                else if (data.row.index === 1 && data.column.index === Math.floor(numColumns/2)) {
+                                    data.cell.styles.fontSize = 10;
+                                    data.cell.styles.fontStyle = 'bold';
+                                }
+                                // Make system name smaller
+                                else if (data.row.index === 2 && data.column.index === Math.floor(numColumns/2)) {
+                                    data.cell.styles.fontSize = 9;
+                                }
+                                // Style report title
+                                else if (data.row.index === 4 && data.column.index === Math.floor(numColumns/2)) {
+                                    data.cell.styles.fontSize = 10;
+                                    data.cell.styles.fontStyle = 'bold';
+                                }
+                                // Style date row
+                                else if (data.row.index === 5 && data.column.index === Math.floor(numColumns/2)) {
+                                    data.cell.styles.fontSize = 8;
+                                    data.cell.styles.fontStyle = 'italic';
+                                }
+                            }
+                            // Apply table header styles (row index 7)
+                            else if (data.row.index === 7) {
+                                data.cell.styles.fillColor = [67, 97, 238];
+                                data.cell.styles.textColor = [255, 255, 255];
+                                data.cell.styles.fontStyle = 'bold';
+                            }
+                        }
+                    });
+                    
+                    // Save the PDF
+                    doc.save(section + '.pdf');
+                } catch (error) {
+                    console.error('PDF Export Error:', error);
+                    alert('Error exporting to PDF: ' + error.message);
+                }
+            }
+
+            // Add date to print header
+            function addDateToPrintHeader() {
+                const today = new Date();
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                const dateString = today.toLocaleDateString('en-US', options);
+                
+                // Add date to print header if it doesn't exist yet
+                if ($('.print-header .date').length === 0) {
+                    $('.print-header').append('<p class="date">Date: ' + dateString + '</p>');
+                }
+            }
+
+            // Also call it when browser print is triggered
+            window.onbeforeprint = addDateToPrintHeader;
+        });
+    </script>
+</body>
+</html> 
