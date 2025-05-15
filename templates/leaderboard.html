@@ -10,44 +10,41 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
 <style>
     :root {
-        --primary-color: #B4121B;        /* Bold Red */
-        --secondary-color: #8A0E15;      /* Darker Red */
-        --accent-color: #D11D27;         /* Bright Red */
+        --primary-color: #0039f5;        /* Bold Red */
+        --secondary-color: #f6fa05;      /* Darker Red */
+        --accent-color: #e7e8ec;         /* Bright Red */
         --light-color: #f8f9fa;          /* Light background */
-        --dark-color: #000000;           /* Pure Black */
-        --success-color: #2a9d8f;        /* Teal */
-        --warning-color: #e9c46a;        /* Gold */
-        --danger-color: #B4121B;         /* Same as primary */
+        --dark-color: #343a40;           /* Dark Text */
+        --neutral-color: #6c757d;        /* Neutral Gray */
+        --border-radius: 10px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
     }
 
     body {
-        font-family: Georgia, serif;
-        background-color: #f5f7fa;
-        color: #495057;
-        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(to right, #0101e9, #d8fd03);
+        color: var(--dark-color);
+        margin: 0;
+        padding: 0;
     }
 
     .header-banner {
         background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
         color: white;
-        padding: 16px 0;
-        overflow: hidden;
+        padding: 20px 0;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary-color);
     }
 
-    .header-banner::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 0;
-        right: 0;
-        height: 20px;
-        background: #fff;
-        border-radius: 50% 50% 0 0;
+    .header-banner h3 {
+        font-weight: 600;
+        margin: 0;
     }
 
     .navbar {
-        background-color: #fff !important;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        background-color: #f1efef!important;
+        box-shadow: var(--box-shadow);
         border-bottom: 2px solid var(--primary-color);
     }
 
@@ -55,8 +52,8 @@
         color: var(--dark-color) !important;
         font-weight: 500;
         padding: 10px 16px !important;
-        border-radius: 4px;
-        transition: all 0.3s ease;
+        border-radius: var(--border-radius);
+        transition: var(--transition);
     }
 
     .navbar .nav-link:hover {
@@ -71,53 +68,38 @@
 
     .card {
         border: none;
-        border-radius: 15px;
-        box-shadow: 0 5px 25px rgba(0,0,0,0.05);
-        transition: all 0.3s ease;
-        margin-bottom: 25px;
-        overflow: hidden;
-        border-top: 3px solid var(--primary-color);
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        margin-bottom: 20px;
+        background-color: white;
     }
 
     .card-header {
-        background: var(--dark-color);
+        background: var(--primary-color);
         color: white;
         font-weight: 600;
-        padding: 18px 20px;
-        border-bottom: none;
-        border-radius: 15px 15px 0 0 !important;
-        border-bottom: 1px solid var(--primary-color);
+        padding: 15px;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+
+    .card-body {
+        padding: 20px;
     }
 
     .table {
-        color: #495057;
-        margin-bottom: 0;
-        border-radius: 10px;
+        border-radius: var(--border-radius);
         overflow: hidden;
+        box-shadow: var(--box-shadow);
     }
 
-    .table th {
-        border-top: none;
-        font-weight: 600;
+    .table thead th {
+        background: var(--primary-color);
         color: white;
-        background-color: var(--dark-color);
-        border-bottom: 2px solid var(--primary-color);
-        padding: 12px 16px;
+        border: none;
     }
 
-    .table td {
-        vertical-align: middle;
-        padding: 12px 16px;
-        border-color: #f0f0f0;
-    }
-
-    .table tr:hover {
-        background-color: rgba(180, 18, 27, 0.03);
+    .table tbody tr:hover {
+        background-color: rgba(180, 18, 27, 0.1);
     }
 
     .trophy-icon {
@@ -158,7 +140,6 @@
         color: var(--primary-color);
     }
 
-    /* Additional styles for better red/black theme */
     .btn-primary {
         background-color: var(--primary-color);
         border-color: var(--primary-color);
@@ -178,7 +159,7 @@
     <!-- Header Banner -->
     <div class="header-banner">
         <div class="container text-center">
-            <h3 class="font-weight-bold mb-0">College of Computer Studies Admin</h3>
+            <h3 class="font-weight-bold mb-0">CCS Admin</h3>
         </div>
     </div>
 

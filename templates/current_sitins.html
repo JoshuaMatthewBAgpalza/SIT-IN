@@ -10,23 +10,25 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <style>
     :root {
-        --primary-color: #B4121B;        /* Primary brand red */
-        --secondary-color: #8C0D15;      /* Darker red for hover states */
-        --accent-color: #D6454F;         /* Brighter red for accents */
-        --light-color: #f8f9fa;          /* Light background */
-        --dark-color: #000000;           /* Pure black for text and headers */
-        --success-color: #2bc4a9;        /* Teal for success states */
-        --warning-color: #f9c74f;        /* Gold for warnings */
-        --danger-color: #B4121B;         /* Same as primary for danger states */
-        --border-radius: 8px;            /* Consistent border radius */
-        --box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Standard shadow */
+        --primary-color: #3106f0; 
+        --secondary-color: #e6f704; 
+        --accent-color: #0c08ee; 
+        --light-color: #f8f9fa; 
+        --dark-color: #212529; 
+        --success-color: #2bc4a9; 
+        --warning-color: #f9c74f; 
+        --danger-color: #0528ec; 
+        --neutral-color: #e9ecef;
+        --border-radius: 10px; 
+        --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
     body {
-        font-family: Georgia, serif;
-        background-color: #f5f7fa;
-        color: #495057;
-        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+         background: linear-gradient(to right, #0101e9, #d8fd03);
+        color: var(--dark-color);
+        margin: 0;
+        padding: 0;
         line-height: 1.6;
     }
 
@@ -35,79 +37,94 @@
         background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         color: white;
         padding: 20px 0;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        text-align: center;
+        box-shadow: var(--box-shadow);
+        border-bottom: 5px solid var(--accent-color);
     }
 
-    .header-banner::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 0;
-        right: 0;
-        height: 20px;
-        background: #fff;
-        border-radius: 50% 50% 0 0;
-    }
-
-    /* Navigation Bar */
+    /* Navbar Styles */
     .navbar {
-        background-color: #fff !important;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        background: linear-gradient(to right, #0101e9, #d8fd03);
+        box-shadow: var(--box-shadow);
+        padding: 10px 20px;
         border-bottom: 2px solid var(--primary-color);
-        padding: 0.5rem 1rem;
     }
 
     .navbar .nav-link {
-        color: var(--dark-color) !important;
+        color: var(--dark-color);
         font-weight: 500;
-        padding: 10px 16px !important;
+        padding: 10px 15px;
         border-radius: var(--border-radius);
-        transition: all 0.3s ease;
-        font-size: 0.95rem;
-        margin: 0 3px;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .navbar .nav-link:hover {
         background-color: rgba(180, 18, 27, 0.1);
-        color: var(--primary-color) !important;
-        transform: translateY(-2px);
+        color: var(--primary-color);
     }
 
     .navbar .nav-item.active .nav-link {
         background-color: var(--primary-color);
-        color: white !important;
-        box-shadow: 0 4px 12px rgba(180, 18, 27, 0.25);
+        color: white;
+        box-shadow: 0 4px 12px rgba(180, 18, 27, 0.3);
     }
 
     /* Card Styles */
     .card {
         border: none;
-        border-radius: 15px;
+        border-radius: var(--border-radius);
         box-shadow: var(--box-shadow);
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        margin-bottom: 25px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 20px;
         overflow: hidden;
-        border-top: 3px solid var(--primary-color);
-        background-color: white;
     }
 
     .card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
     .card-header {
-        background: var(--dark-color);
+        background: var(--primary-color);
         color: white;
         font-weight: 600;
-        padding: 18px 25px;
-        border-bottom: 2px solid var(--primary-color);
-        border-radius: 15px 15px 0 0 !important;
+        padding: 15px;
+        border-bottom: 3px solid var(--secondary-color);
     }
 
     .card-body {
-        padding: 25px;
+        padding: 20px;
+    }
+
+    /* Table Styles */
+    .table {
+        background-color: white;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+        margin-bottom: 1.5rem;
+    }
+
+    .table thead th {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        font-weight: 600;
+        padding: 15px;
+    }
+
+    .table tbody tr {
+        transition: background-color 0.2s ease;
+    }
+
+    .table tbody tr:hover {
+        background-color: rgba(180, 18, 27, 0.05);
+    }
+
+    .table td {
+        padding: 15px;
+        vertical-align: middle;
+        border-color: var(--neutral-color);
     }
 
     /* Button Styles */
@@ -115,14 +132,13 @@
         border-radius: var(--border-radius);
         padding: 10px 20px;
         font-weight: 500;
-        letter-spacing: 0.5px;
-        transition: all 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         border: none;
-        color: white;
     }
 
     .btn-primary {
         background: var(--primary-color);
+        color: white;
         box-shadow: 0 2px 5px rgba(180, 18, 27, 0.2);
     }
 
@@ -134,6 +150,7 @@
 
     .btn-success {
         background: var(--success-color);
+        color: white;
     }
 
     .btn-success:hover {
@@ -144,6 +161,7 @@
 
     .btn-danger {
         background: var(--danger-color);
+        color: white;
     }
 
     .btn-danger:hover {
@@ -163,41 +181,20 @@
         box-shadow: 0 5px 15px rgba(249, 199, 79, 0.3);
     }
 
-    .btn-sm {
-        padding: 5px 10px;
-        font-size: 0.85rem;
+    /* Form Styles */
+    .form-control {
+        border-radius: var(--border-radius);
+        border: 1px solid var(--neutral-color);
+        padding: 12px 15px;
+        font-size: 0.95rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        background-color: var(--light-color);
     }
 
-    /* Table Styles */
-    .table {
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 5px rgba(180, 18, 27, 0.3);
         background-color: white;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: var(--box-shadow);
-        margin-bottom: 1.5rem;
-    }
-
-    .table thead th {
-        background-color: var(--dark-color);
-        color: white;
-        border: none;
-        font-weight: 600;
-        padding: 15px;
-        border-bottom: 2px solid var(--primary-color);
-    }
-
-    .table td {
-        padding: 15px;
-        vertical-align: middle;
-        border-color: #f0f0f0;
-    }
-
-    .table tbody tr {
-        transition: all 0.2s ease;
-    }
-
-    .table tbody tr:hover {
-        background-color: rgba(180, 18, 27, 0.05);
     }
 
     /* Badge Styles */
@@ -225,46 +222,30 @@
         background-color: var(--danger-color);
     }
 
-    /* Form Styles */
-    .form-control {
-        border-radius: var(--border-radius);
-        border: 1px solid #e1e1e1;
-        padding: 12px 15px;
-        font-size: 0.95rem;
-        transition: all 0.3s ease;
-        background-color: #f8f9fa;
-    }
-
-    .form-control:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 0.2rem rgba(180, 18, 27, 0.25);
-        background-color: #fff;
-    }
-
     /* Scrollbar Styles */
     ::-webkit-scrollbar {
         width: 8px;
-        height: 8px;
     }
+
     ::-webkit-scrollbar-thumb {
         background-color: var(--primary-color);
         border-radius: 4px;
     }
+
     ::-webkit-scrollbar-track {
-        background-color: #f1f1f1;
+        background-color: var(--neutral-color);
     }
 
     /* Responsive Adjustments */
     @media (max-width: 768px) {
         .navbar .nav-link {
-            padding: 8px 12px !important;
-            margin: 2px 0;
+            padding: 8px 12px;
         }
-        
+
         .card-body {
-            padding: 20px;
+            padding: 15px;
         }
-        
+
         .btn {
             padding: 8px 16px;
         }
@@ -276,7 +257,7 @@
     <!-- Header Banner -->
     <div class="header-banner">
         <div class="container text-center">
-            <h3 class="font-weight-bold mb-0">College of Computer Studies Admin</h3>
+            <h3 class="font-weight-bold mb-0">CCS ADMIN</h3>
         </div>
     </div>
 

@@ -10,357 +10,158 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
 <style>
 :root {
-  --primary-color: #B4121B;        /* Bold Red */
-  --secondary-color: #8A0E15;      /* Darker Red */
-  --accent-color: #D11D27;         /* Bright Red (adjusted for better harmony) */
-  --light-color: #f8fafc;          /* Off-white */
-  --dark-color: #000000;           /* Pure Black */
-  --success-color: #2a9d8f;        /* Teal */
-  --warning-color: #e9c46a;        /* Gold */
-  --danger-color: #B4121B;         /* Same as primary */
-  --neutral-100: #f3f4f6;          /* Lighter gray */
-  --neutral-200: #e5e7eb;          /* Light gray */
-  --neutral-300: #d1d5db;          /* Gray */
-  --neutral-400: #9ca3af;          /* Medium gray */
-  --neutral-500: #6b7280;          /* Dark gray */
-  --border-radius-sm: 4px;
+  --primary-color: #1606f1; 
+  --secondary-color: #e3fc09; 
+  --light-color: #ee07db; 
+  --dark-color: #0c0b0b; 
+  --neutral-color: #6c757d; 
   --border-radius: 8px;
-  --border-radius-lg: 12px;
-  --box-shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-  --box-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-  --transition: all 0.2s ease;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background-color: var(--light-color);
+  font-family: 'Poppins', sans-serif;
+   background: linear-gradient(to right, #0101e9, #d8fd03);
   color: var(--dark-color);
-  min-height: 100vh;
-  line-height: 1.5;
+  margin: 0;
+  padding: 0;
 }
 
 .header-banner {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background: var(--primary-color);
   color: white;
   padding: 20px 0;
+  text-align: center;
+  border-bottom: 3px solid var(--secondary-color);
 }
 
-.navbar {
-  background-color: white !important;
-  box-shadow: var(--box-shadow);
-  padding: 0.75rem 1rem;
-  border-bottom: 2px solid var(--primary-color);
-}
-
-.navbar .nav-link {
-  color: var(--dark-color) !important;
-  font-weight: 500;
-  padding: 0.75rem 1rem !important;
-  border-radius: var(--border-radius-sm);
-  transition: var(--transition);
-}
-
-.navbar .nav-link:hover {
-  color: var(--primary-color) !important;
-  background-color: rgba(180, 18, 27, 0.08);
-}
-
-.navbar .nav-item.active .nav-link {
-  background-color: var(--primary-color);
-  color: white !important;
+.header-banner h3 {
+  font-weight: 600;
+  margin: 0;
 }
 
 .card {
   border: none;
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  transition: var(--transition);
-  margin-bottom: 1.5rem;
-  overflow: hidden;
+  margin-bottom: 20px;
   background-color: white;
-  border-top: 3px solid var(--primary-color);
-}
-
-.card:hover {
-  box-shadow: var(--box-shadow-lg);
-  transform: translateY(-2px);
 }
 
 .card-header {
-  background: var(--dark-color);
+  background: var(--primary-color);
   color: white;
   font-weight: 600;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid var(--primary-color);
+  padding: 15px;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
 .card-body {
-  padding: 1.5rem;
+  padding: 20px;
 }
 
 .btn {
   border-radius: var(--border-radius);
-  padding: 0.625rem 1.25rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  font-weight: 500;
   transition: var(--transition);
-  border: none;
 }
 
 .btn-primary {
   background: var(--primary-color);
-  color: white;
+  border: none;
 }
 
 .btn-primary:hover {
   background: var(--secondary-color);
-  box-shadow: 0 4px 12px rgba(180, 18, 27, 0.25);
-}
-
-.btn-success {
-  background: var(--success-color);
-  color: white;
-}
-
-.btn-success:hover {
-  background: #24877a;
-  box-shadow: 0 4px 12px rgba(42, 157, 143, 0.25);
+  box-shadow: var(--box-shadow);
 }
 
 .btn-danger {
-  background: var(--danger-color);
-  color: white;
+  background: #dc3545;
+  border: none;
 }
 
 .btn-danger:hover {
-  background: var(--secondary-color);
-  box-shadow: 0 4px 12px rgba(180, 18, 27, 0.25);
-}
-
-.btn-info {
-  background: var(--accent-color);
-  color: white;
-}
-
-.btn-info:hover {
-  background: #c91a24;
-  box-shadow: 0 4px 12px rgba(209, 29, 39, 0.25);
-}
-
-.btn-sm {
-  padding: 0.375rem 0.75rem;
-  font-size: 0.875rem;
+  background: #bd2130;
+  box-shadow: var(--box-shadow);
 }
 
 .table {
-  background-color: white;
   border-radius: var(--border-radius);
   overflow: hidden;
-  box-shadow: var(--box-shadow-sm);
-  margin-bottom: 1.5rem;
-  border: 1px solid var(--neutral-200);
+  box-shadow: var(--box-shadow);
 }
 
 .table thead th {
-  background: linear-gradient(to bottom, var(--dark-color), #1a1a1a);
+  background: var(--primary-color);
   color: white;
   border: none;
-  font-weight: 600;
-  padding: 0.875rem 1rem;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  border-bottom: 2px solid var(--primary-color);
-}
-
-.table td {
-  padding: 1rem;
-  vertical-align: middle;
-  border-color: var(--neutral-200);
-  color: var(--neutral-500);
-}
-
-.table tbody tr {
-  transition: var(--transition);
 }
 
 .table tbody tr:hover {
-  background-color: rgba(180, 18, 27, 0.05);
+  background-color: rgba(0, 123, 255, 0.1);
 }
 
-.message-cell {
-  max-width: 400px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+.alert {
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
 }
 
-.message-cell p {
-  margin-bottom: 0.5rem;
-}
-
-.badge {
-  padding: 0.35em 0.65em;
-  font-weight: 600;
-  border-radius: var(--border-radius-sm);
-  font-size: 0.75rem;
-}
-
-.badge-success {
-  background-color: var(--success-color);
+.info-box {
+  background: var(--neutral-color);
   color: white;
+  padding: 15px;
+  border-radius: var(--border-radius);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: var(--box-shadow);
 }
 
-.badge-warning {
-  background-color: var(--warning-color);
-  color: var(--dark-color);
-}
-
-.badge-danger {
-  background-color: var(--danger-color);
-  color: white;
+.info-box i {
+  font-size: 1.5rem;
+  margin-right: 10px;
 }
 
 .modal-content {
-  border-radius: var(--border-radius-lg);
-  border: none;
-  overflow: hidden;
-  box-shadow: var(--box-shadow-lg);
-  border-top: 3px solid var(--primary-color);
-}
-
-.modal-header {
-  background: white;
-  color: var(--dark-color);
-  border-bottom: 1px solid var(--neutral-200);
-  padding: 1.25rem 1.5rem;
-}
-
-.modal-header .close {
-  color: var(--neutral-500);
-  opacity: 0.8;
-  transition: var(--transition);
-}
-
-.modal-header .close:hover {
-  opacity: 1;
-  color: var(--primary-color);
-}
-
-.modal-footer {
-  border-top: 1px solid var(--neutral-200);
-  padding: 1.25rem 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
 }
 
 .form-control {
   border-radius: var(--border-radius);
-  border: 1px solid var(--neutral-300);
-  padding: 0.75rem 1rem;
-  font-size: 0.95rem;
+  border: 1px solid var(--neutral-color);
   transition: var(--transition);
-  background-color: white;
-  margin-bottom: 1rem;
 }
 
 .form-control:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(180, 18, 27, 0.15);
-}
-
-.filter-bar {
-  background-color: white;
-  border-radius: var(--border-radius);
-  padding: 1rem 1.25rem;
-  margin-bottom: 1.5rem;
-  box-shadow: var(--box-shadow);
-  border-top: 3px solid var(--primary-color);
-}
-
-.page-item.active .page-link {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-  color: white;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 .page-link {
+  border-radius: var(--border-radius);
   color: var(--primary-color);
-  margin: 0 2px;
-  border-radius: var(--border-radius-sm);
-  font-weight: 500;
 }
 
 .page-link:hover {
-  color: var(--secondary-color);
-  background-color: rgba(180, 18, 27, 0.08);
+  background-color: rgba(0, 123, 255, 0.1);
 }
 
-@media print {
-  .no-print {
-    display: none;
-  }
-  .navbar, .header-banner {
-    display: none;
-  }
-  .card {
-    box-shadow: none;
-    border: 1px solid var(--neutral-200);
-    border-top: 3px solid var(--primary-color);
-  }
-  .table {
-    width: 100%;
-    box-shadow: none;
-    border: 1px solid var(--neutral-200);
-  }
-  .print-header {
-    display: block !important;
-    text-align: center;
-    margin-bottom: 20px;
-    width: 100%;
-  }
-  .print-header h1 {
-    font-size: 18px;
-    font-weight: 600;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    width: 100%;
-    color: var(--primary-color);
-  }
-  .print-header h2 {
-    font-size: 16px;
-    font-weight: 600;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    width: 100%;
-  }
-  .print-header h3 {
-    font-size: 14px;
-    margin: 0;
-    padding: 0;
-    margin-bottom: 15px;
-    text-align: center;
-    width: 100%;
-  }
-  .print-header .date {
-    font-size: 12px;
-    margin: 0;
-    padding: 0;
-    font-style: italic;
-    text-align: center;
-    width: 100%;
-  }
-  
-  .table thead th {
-    text-align: center;
-    background: var(--dark-color) !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
+.badge {
+  font-size: 0.9rem;
+  padding: 0.5em 0.75em;
+  border-radius: var(--border-radius);
 }
 
-.print-header {
-  display: none;
+.badge-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.badge-primary:hover {
+  background: var(--secondary-color);
 }
 </style>
 </head>
@@ -368,7 +169,7 @@ body {
     <!-- Header Banner -->
     <div class="header-banner">
         <div class="container text-center">
-            <h3 class="font-weight-bold mb-0">College of Computer Studies Admin</h3>
+            <h3 class="font-weight-bold mb-0">CCS ADMIN</h3>
         </div>
     </div>
 

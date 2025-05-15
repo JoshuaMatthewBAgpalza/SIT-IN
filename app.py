@@ -1275,30 +1275,30 @@ def edit_announcement(announcement_id):
         data = request.get_json()
         title = data.get('title')
         content = data.get('content')
-        
+
         if not title or not content:
             return jsonify({'error': 'Title and content are required'}), 400
         
-        connection = sqlite3.connect('students.db')
-        cursor = connection.cursor()
-        
+        conn = sqlite3.connect('students.db')
+        cursor = conn.cursor()
+
         cursor.execute('''
-            UPDATE announcement
+            UPDATE announcement 
             SET title = ?, content = ?
             WHERE id = ?
         ''', (title, content, announcement_id))
-        
-        connection.commit()
-        
-        if cursor.rowcount == 0:
-            connection.close()
+
+        conn.commit()
+        affected = cursor.rowcount
+        conn.close()
+
+        if affected == 0:
             return jsonify({'error': 'Announcement not found'}), 404
-        
-        connection.close()
+
         return jsonify({'success': True})
-    
+
     except Exception as e:
-        print(f"Error editing announcement: {e}")
+        print(f"Error updating announcement: {e}")
         return jsonify({'error': str(e)}), 500
 
 @app.route('/delete_announcement/<int:announcement_id>', methods=['POST'])
@@ -1622,6 +1622,7 @@ def create_announcement():
             return render_template('create_announcement.html')
     
     return render_template('create_announcement.html')
+
 
 # Route to get announcements for user dashboard
 @app.route('/get_announcements')
@@ -4222,5 +4223,4 @@ def delete_resource():
 if __name__ == '__main__':
     init_db()
     app.run(debug=True)
-
-app.run(debug=True, host=" 172.19.131.140" , port="5000")
+    app.run(debug=True, host=" 172.19.131.140" , port="5000")

@@ -10,20 +10,21 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <style>
     :root {
-        --primary-color: #B4121B;
-        --secondary-color: #8C0D15;
+        --primary-color: #1606f3;
+        --secondary-color: #cdfa06;
         --accent-color: #D6454F;
         --light-color: #f8f9fa;
-        --dark-color: #000000;
+        --dark-color: #3307f3;
         --success-color: #2bc4a9;
         --warning-color: #f9c74f;
         --danger-color: #B4121B;
+        --glow-color: rgba(67, 97, 238, 0.8);
     }
 
     body {
-        font-family: Georgia, serif;
-        background-color: #f5f7fa;
-        color: #495057;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(to right, #0101e9, #d8fd03);
+        color: #e0e0e0;
         min-height: 100vh;
     }
 
@@ -32,26 +33,22 @@
         color: white;
         padding: 16px 0;
         overflow: hidden;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 15px var(--glow-color);
     }
 
-    .header-banner::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 0;
-        right: 0;
-        height: 20px;
-        background: #fff;
-        border-radius: 50% 50% 0 0;
+    .header-banner h3 {
+        font-size: 2rem;
+        font-weight: 700;
     }
 
     .navbar {
-        background-color: #fff !important;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        background: linear-gradient(to right, #0101e9, #d8fd03);
+        box-shadow: 0 2px 15px rgb(197, 252, 2);
     }
 
     .navbar .nav-link {
-        color: var(--dark-color) !important;
+        color: black;
         font-weight: 500;
         padding: 10px 16px !important;
         border-radius: 4px;
@@ -61,26 +58,29 @@
     .navbar .nav-link:hover {
         background-color: rgba(180, 18, 27, 0.1);
         color: var(--primary-color) !important;
+        text-shadow: 0 0 5px var(--primary-color);
     }
 
     .navbar .nav-item.active .nav-link {
         background-color: var(--primary-color);
         color: white !important;
+        box-shadow: 0 0 10px var(--glow-color);
     }
 
     .card {
         border: none;
         border-radius: 15px;
-        box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
         margin-bottom: 25px;
         overflow: hidden;
+        background: linear-gradient(to bottom right, #1e1e2f, #252540);
         border-top: 3px solid var(--primary-color);
     }
 
     .card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     }
 
     .card-header {
@@ -90,10 +90,13 @@
         padding: 18px 20px;
         border-bottom: 2px solid var(--primary-color) !important;
         border-radius: 15px 15px 0 0 !important;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
     }
 
     .card-body {
         padding: 25px;
+        background: linear-gradient(to bottom right, #252540, #1e1e2f);
+        color: #e0e0e0;
     }
 
     .form-control {
@@ -102,14 +105,15 @@
         padding: 12px 15px;
         font-size: 0.95rem;
         transition: all 0.3s ease;
-        background-color: #f8f9fa;
-        margin-bottom: 15px;
+        background-color: #2a2a3c;
+        color: #e0e0e0;
+        box-shadow: 0 0 10px rgba(67, 97, 238, 0.3);
     }
 
     .form-control:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 0.2rem rgba(180, 18, 27, 0.25);
-        background-color: #fff;
+        border-color: var(--glow-color);
+        box-shadow: 0 0 15px var(--glow-color);
+        background-color: #1e1e2f;
     }
 
     .btn {
@@ -118,44 +122,52 @@
         font-weight: 500;
         letter-spacing: 0.5px;
         transition: all 0.3s ease;
+        color: #333333;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
     }
 
     .btn-primary {
         background: var(--primary-color);
         border: none;
+        box-shadow: 0 0 10px var(--glow-color);
     }
 
     .btn-primary:hover {
         background: var(--secondary-color);
         transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(180, 18, 27, 0.3);
+        box-shadow: 0 0 20px var(--glow-color);
     }
 
     .btn-success {
         background: var(--success-color);
         border: none;
+        box-shadow: 0 0 10px rgba(43, 196, 169, 0.5);
     }
 
     .btn-success:hover {
         background: #24a08c;
         transform: translateY(-3px);
+        box-shadow: 0 0 20px rgba(43, 196, 169, 0.8);
     }
 
     .btn-danger {
         background: var(--danger-color);
         border: none;
+        box-shadow: 0 0 10px rgba(180, 18, 27, 0.5);
     }
 
     .btn-danger:hover {
         background: #8C0D15;
         transform: translateY(-3px);
+        box-shadow: 0 0 20px rgba(180, 18, 27, 0.8);
     }
 
     .table {
-        background-color: white;
+        background-color: #2a2a3c;
         border-radius: 10px;
         overflow: hidden;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        color: #e0e0e0;
     }
 
     .table thead th {
@@ -164,6 +176,7 @@
         border: none;
         padding: 15px;
         border-bottom: 2px solid var(--primary-color);
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
     }
 
     .table-striped tbody tr:nth-of-type(odd) {
@@ -173,6 +186,7 @@
     .badge-pill {
         padding: 0.5em 1em;
         font-weight: 500;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
     }
 
     .badge-pending {
@@ -190,45 +204,24 @@
         color: white;
     }
 
-    .nav-tabs {
-        border-bottom: 2px solid #dee2e6;
-        margin-bottom: 20px;
-    }
-
-    .nav-tabs .nav-link {
-        border: none;
-        border-bottom: 2px solid transparent;
-        color: #6c757d;
-        font-weight: 500;
-        padding: 10px 20px;
-        margin-bottom: -2px;
-    }
-
-    .nav-tabs .nav-link.active {
-        color: var(--primary-color);
-        border-bottom: 2px solid var(--primary-color);
-        background-color: transparent;
-    }
-
-    /* Red scrollbar for navbar collapse */
-    .navbar-collapse::-webkit-scrollbar {
-        width: 8px;
-    }
-    .navbar-collapse::-webkit-scrollbar-thumb {
-        background-color: var(--primary-color);
-        border-radius: 4px;
-    }
-
-    /* Modal header styling */
     .modal-header {
         background-color: var(--dark-color);
         color: white;
         border-bottom: 2px solid var(--primary-color);
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
     }
 
-    /* Filter bar styling */
-    .filter-bar {
-        border-top: 3px solid var(--primary-color);
+    .modal-body {
+        background: linear-gradient(to bottom right, #1e1e2f, #252540);
+        color: #e0e0e0;
+    }
+
+    .modal-footer .btn {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .modal-footer .btn:hover {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
     }
 
     @media (max-width: 768px) {
@@ -236,88 +229,13 @@
             padding: 15px;
         }
     }
-
-    @media print {
-        .navbar, .card-header h5 button, .btn-refresh, 
-        .btn-info, .no-print, .header-banner {
-            display: none !important;
-        }
-        
-        .card {
-            border: none !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            border-top: 3px solid var(--primary-color) !important;
-        }
-        
-        .card-body {
-            padding: 0 !important;
-        }
-        
-        table {
-            width: 100% !important;
-            border-collapse: collapse !important;
-        }
-        
-        th, td {
-            padding: 5px !important;
-            text-align: center !important;
-        }
-        
-        .print-header {
-            display: block !important;
-            text-align: center !important;
-            margin: 0 auto 15px auto !important;
-            width: 100% !important;
-            color: var(--primary-color) !important;
-        }
-        
-        .print-header h1 {
-            font-size: 18px !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            font-weight: bold !important;
-            color: var(--primary-color) !important;
-        }
-        
-        .print-header h2 {
-            font-size: 16px !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            font-weight: bold !important;
-        }
-        
-        .print-header h3 {
-            font-size: 14px !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-        
-        .print-header .date {
-            font-size: 12px !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            font-style: italic !important;
-        }
-    }
-
-    .print-header {
-        display: none;
-    }
-</style>
+</style>>
 </head>
 <body>
-    <!-- Print Header (visible only when printing) -->
-    <div class="print-header">
-        <h1>University of Cebu Main Campus</h1>
-        <h2>College of Computer Studies</h2>
-        <h3>Sitin Monitoring System</h3>
-    </div>
-
     <!-- Header Banner -->
     <div class="header-banner">
         <div class="container text-center">
-            <h3 class="font-weight-bold mb-0">College of Computer Studies Admin</h3>
+            <h3 class="font-weight-bold mb-0">CCS ADMIN</h3>
         </div>
     </div>
 
